@@ -1,0 +1,81 @@
+import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
+import { AppSidebar } from '@/components/Sidebar';
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
+import { useLocation } from 'react-router-dom';
+
+interface LayoutProps {
+  children: React.ReactNode;
+}
+
+export function Layout({ children }: LayoutProps) {
+  const location = useLocation();
+  
+  const getBreadcrumbs = () => {
+    const path = location.pathname;
+    const segments = path.split('/').filter(Boolean);
+    
+    const breadcrumbs = [
+      { title: 'Dashboard', href: '/dashboard' }
+    ];
+    
+    if (segments[0] === 'students') {
+      breadcrumbs.push({ title: 'Students', href: '/students' });
+      if (segments[1] === 'add') {
+        breadcrumbs.push({ title: 'Add Student', href: '/students/add' });
+      }
+    } else if (segments[0] === 'attendance') {
+      breadcrumbs.push({ title: 'Attendance', href: '/attendance' });
+    } else if (segments[0] === 'analytics') {
+      breadcrumbs.push({ title: 'Analytics', href: '/analytics' });
+    } else if (segments[0] === 'settings') {
+      breadcrumbs.push({ title: 'Settings', href: '/settings' });
+    }
+    
+    return breadcrumbs;
+  };
+
+  const breadcrumbs = getBreadcrumbs();
+
+  return (
+    <SidebarProvider>
+      <div className="min-h-screen flex w-full">
+        <AppSidebar />
+        
+        <div className="flex-1 flex flex-col">
+          {/* Header */}
+          <header className="h-16 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-40">
+            <div className="flex h-16 items-center gap-4 px-4">
+              <SidebarTrigger />
+              
+              <Breadcrumb>
+                <BreadcrumbList>
+                  {breadcrumbs.map((breadcrumb, index) => (
+                    <div key={breadcrumb.href} className="flex items-center">
+                      {index > 0 && <BreadcrumbSeparator />}
+                      <BreadcrumbItem>
+                        {index === breadcrumbs.length - 1 ? (
+                          <BreadcrumbPage>{breadcrumb.title}</BreadcrumbPage>
+                        ) : (
+                          <BreadcrumbLink href={breadcrumb.href}>
+                            {breadcrumb.title}
+                          </BreadcrumbLink>
+                        )}
+                      </BreadcrumbItem>
+                    </div>
+                  ))}
+                </BreadcrumbList>
+              </Breadcrumb>
+            </div>
+          </header>
+
+          {/* Main Content */}
+          <main className="flex-1 overflow-auto">
+            <div className="container mx-auto p-6">
+              {children}
+            </div>
+          </main>
+        </div>
+      </div>
+    </SidebarProvider>
+  );
+}
