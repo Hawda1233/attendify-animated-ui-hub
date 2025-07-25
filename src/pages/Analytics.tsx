@@ -196,64 +196,74 @@ export default function Analytics() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6 p-4 sm:p-6 animate-fade-in">
       {/* Header */}
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">Analytics</h1>
-        <p className="text-muted-foreground">
-          Insights and statistics about your institution
+      <div className="animate-slide-up">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight gradient-primary bg-clip-text text-transparent">
+          Analytics & Reports
+        </h1>
+        <p className="text-muted-foreground text-sm sm:text-base mt-2">
+          Comprehensive analytics and reporting for informed decision making
         </p>
       </div>
 
       {/* Key Metrics */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card>
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
+        <Card className="animate-scale-in hover-scale transition-all duration-300 hover:shadow-lg border-border/50 hover:border-primary/20">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Students</CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-xs sm:text-sm font-medium">Total Students</CardTitle>
+            <div className="h-8 w-8 sm:h-10 sm:w-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
+              <Users className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
+            </div>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{analytics.totalStudents}</div>
-            <p className="text-xs text-muted-foreground">
+            <div className="text-xl sm:text-2xl font-bold">{analytics.totalStudents}</div>
+            <p className="text-xs text-muted-foreground mt-1">
               Across all years and courses
             </p>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="animate-scale-in hover-scale transition-all duration-300 hover:shadow-lg border-border/50 hover:border-primary/20" style={{ animationDelay: '100ms' }}>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Colleges</CardTitle>
-            <GraduationCap className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-xs sm:text-sm font-medium">Total Colleges</CardTitle>
+            <div className="h-8 w-8 sm:h-10 sm:w-10 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center">
+              <GraduationCap className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
+            </div>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{analytics.totalColleges}</div>
-            <p className="text-xs text-muted-foreground">
+            <div className="text-xl sm:text-2xl font-bold">{analytics.totalColleges}</div>
+            <p className="text-xs text-muted-foreground mt-1">
               Registered institutions
             </p>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="animate-scale-in hover-scale transition-all duration-300 hover:shadow-lg border-border/50 hover:border-primary/20" style={{ animationDelay: '200ms' }}>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Today's Attendance</CardTitle>
-            <Calendar className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-xs sm:text-sm font-medium">Today's Attendance</CardTitle>
+            <div className="h-8 w-8 sm:h-10 sm:w-10 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg flex items-center justify-center">
+              <Calendar className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
+            </div>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{analytics.attendanceToday}</div>
-            <p className="text-xs text-muted-foreground">
+            <div className="text-xl sm:text-2xl font-bold">{analytics.attendanceToday}</div>
+            <p className="text-xs text-muted-foreground mt-1">
               Records marked today
             </p>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="animate-scale-in hover-scale transition-all duration-300 hover:shadow-lg border-border/50 hover:border-primary/20" style={{ animationDelay: '300ms' }}>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Attendance Rate</CardTitle>
-            <UserCheck className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-xs sm:text-sm font-medium">Attendance Rate</CardTitle>
+            <div className="h-8 w-8 sm:h-10 sm:w-10 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center">
+              <UserCheck className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
+            </div>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{analytics.attendanceRate.toFixed(1)}%</div>
-            <p className="text-xs text-muted-foreground">
+            <div className="text-xl sm:text-2xl font-bold">{analytics.attendanceRate.toFixed(1)}%</div>
+            <p className="text-xs text-muted-foreground mt-1">
               Present today
             </p>
           </CardContent>
@@ -261,112 +271,140 @@ export default function Analytics() {
       </div>
 
       {/* Charts */}
-      <Tabs defaultValue="students" className="space-y-4">
-        <TabsList>
-          <TabsTrigger value="students">Student Distribution</TabsTrigger>
-          <TabsTrigger value="attendance">Attendance Trends</TabsTrigger>
-          <TabsTrigger value="courses">Course Analysis</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="students" className="space-y-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Students by Year</CardTitle>
-                <CardDescription>Distribution of active students across academic years</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <ChartContainer config={chartConfig}>
-                  <BarChart data={analytics.studentsByYear}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis 
-                      dataKey="year" 
-                      tickFormatter={(value) => `Year ${value}`}
-                    />
-                    <YAxis />
-                    <ChartTooltip 
-                      content={<ChartTooltipContent />}
-                      labelFormatter={(label) => `Year ${label}`}
-                    />
-                    <Bar dataKey="count" fill="var(--color-students)" />
-                  </BarChart>
-                </ChartContainer>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Students by Status</CardTitle>
-                <CardDescription>Current status distribution of all students</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <ChartContainer config={chartConfig}>
-                  <PieChart>
-                    <Pie
-                      data={analytics.studentsByStatus}
-                      cx="50%"
-                      cy="50%"
-                      labelLine={false}
-                      label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                      outerRadius={80}
-                      fill="#8884d8"
-                      dataKey="count"
-                    >
-                      {analytics.studentsByStatus.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={entry.fill} />
-                      ))}
-                    </Pie>
-                    <ChartTooltip content={<ChartTooltipContent />} />
-                  </PieChart>
-                </ChartContainer>
-              </CardContent>
-            </Card>
+      <div className="animate-fade-in" style={{ animationDelay: '400ms' }}>
+        <Tabs defaultValue="students" className="space-y-4">
+          <div className="overflow-x-auto">
+            <TabsList className="w-full sm:w-auto min-w-max">
+              <TabsTrigger value="students" className="text-xs sm:text-sm">Student Distribution</TabsTrigger>
+              <TabsTrigger value="attendance" className="text-xs sm:text-sm">Attendance Trends</TabsTrigger>
+              <TabsTrigger value="courses" className="text-xs sm:text-sm">Course Analysis</TabsTrigger>
+            </TabsList>
           </div>
-        </TabsContent>
 
-        <TabsContent value="attendance" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Attendance Trends (Last 7 Days)</CardTitle>
-              <CardDescription>Daily attendance patterns and trends</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <ChartContainer config={chartConfig}>
-                <LineChart data={analytics.attendanceByDate}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="date" />
-                  <YAxis />
-                  <ChartTooltip content={<ChartTooltipContent />} />
-                  <ChartLegend content={<ChartLegendContent />} />
-                  <Line type="monotone" dataKey="present" stroke="var(--color-present)" strokeWidth={2} />
-                  <Line type="monotone" dataKey="absent" stroke="var(--color-absent)" strokeWidth={2} />
-                  <Line type="monotone" dataKey="late" stroke="var(--color-late)" strokeWidth={2} />
-                </LineChart>
-              </ChartContainer>
-            </CardContent>
-          </Card>
-        </TabsContent>
+          <TabsContent value="students" className="space-y-4 animate-fade-in">
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 lg:gap-6">
+              <Card className="hover-scale transition-all duration-300 hover:shadow-lg">
+                <CardHeader>
+                  <CardTitle className="text-lg sm:text-xl">Students by Year</CardTitle>
+                  <CardDescription className="text-xs sm:text-sm">Distribution of active students across academic years</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="h-64 sm:h-72 lg:h-80">
+                    <ChartContainer config={chartConfig} className="h-full w-full">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <BarChart data={analytics.studentsByYear}>
+                          <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
+                          <XAxis 
+                            dataKey="year" 
+                            tickFormatter={(value) => `Year ${value}`}
+                            fontSize={12}
+                          />
+                          <YAxis fontSize={12} />
+                          <ChartTooltip 
+                            content={<ChartTooltipContent />}
+                            labelFormatter={(label) => `Year ${label}`}
+                          />
+                          <Bar dataKey="count" fill="var(--color-students)" radius={[4, 4, 0, 0]} />
+                        </BarChart>
+                      </ResponsiveContainer>
+                    </ChartContainer>
+                  </div>
+                </CardContent>
+              </Card>
 
-        <TabsContent value="courses" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Top Courses by Enrollment</CardTitle>
-              <CardDescription>Most popular courses based on active student enrollment</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <ChartContainer config={chartConfig}>
-                <BarChart data={analytics.studentsByCourse} layout="horizontal">
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis type="number" />
-                  <YAxis dataKey="course" type="category" width={120} />
-                  <ChartTooltip content={<ChartTooltipContent />} />
-                  <Bar dataKey="count" fill="var(--color-students)" />
-                </BarChart>
-              </ChartContainer>
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
+              <Card className="hover-scale transition-all duration-300 hover:shadow-lg">
+                <CardHeader>
+                  <CardTitle className="text-lg sm:text-xl">Students by Status</CardTitle>
+                  <CardDescription className="text-xs sm:text-sm">Current status distribution of all students</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="h-64 sm:h-72 lg:h-80">
+                    <ChartContainer config={chartConfig} className="h-full w-full">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <PieChart>
+                          <Pie
+                            data={analytics.studentsByStatus}
+                            cx="50%"
+                            cy="50%"
+                            labelLine={false}
+                            label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                            outerRadius="80%"
+                            fill="#8884d8"
+                            dataKey="count"
+                            fontSize={10}
+                          >
+                            {analytics.studentsByStatus.map((entry, index) => (
+                              <Cell key={`cell-${index}`} fill={entry.fill} />
+                            ))}
+                          </Pie>
+                          <ChartTooltip content={<ChartTooltipContent />} />
+                        </PieChart>
+                      </ResponsiveContainer>
+                    </ChartContainer>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="attendance" className="space-y-4 animate-fade-in">
+            <Card className="hover-scale transition-all duration-300 hover:shadow-lg">
+              <CardHeader>
+                <CardTitle className="text-lg sm:text-xl">Attendance Trends (Last 7 Days)</CardTitle>
+                <CardDescription className="text-xs sm:text-sm">Daily attendance patterns and trends</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="h-64 sm:h-72 lg:h-96">
+                  <ChartContainer config={chartConfig} className="h-full w-full">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <LineChart data={analytics.attendanceByDate}>
+                        <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
+                        <XAxis dataKey="date" fontSize={12} />
+                        <YAxis fontSize={12} />
+                        <ChartTooltip content={<ChartTooltipContent />} />
+                        <ChartLegend content={<ChartLegendContent />} />
+                        <Line type="monotone" dataKey="present" stroke="var(--color-present)" strokeWidth={3} dot={{ r: 4 }} />
+                        <Line type="monotone" dataKey="absent" stroke="var(--color-absent)" strokeWidth={3} dot={{ r: 4 }} />
+                        <Line type="monotone" dataKey="late" stroke="var(--color-late)" strokeWidth={3} dot={{ r: 4 }} />
+                      </LineChart>
+                    </ResponsiveContainer>
+                  </ChartContainer>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="courses" className="space-y-4 animate-fade-in">
+            <Card className="hover-scale transition-all duration-300 hover:shadow-lg">
+              <CardHeader>
+                <CardTitle className="text-lg sm:text-xl">Top Courses by Enrollment</CardTitle>
+                <CardDescription className="text-xs sm:text-sm">Most popular courses based on active student enrollment</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="h-64 sm:h-72 lg:h-96">
+                  <ChartContainer config={chartConfig} className="h-full w-full">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <BarChart data={analytics.studentsByCourse} layout="horizontal">
+                        <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
+                        <XAxis type="number" fontSize={12} />
+                        <YAxis 
+                          dataKey="course" 
+                          type="category" 
+                          width={100} 
+                          fontSize={10}
+                          tick={{ textAnchor: 'end' }}
+                        />
+                        <ChartTooltip content={<ChartTooltipContent />} />
+                        <Bar dataKey="count" fill="var(--color-students)" radius={[0, 4, 4, 0]} />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </ChartContainer>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
+      </div>
     </div>
   );
 }

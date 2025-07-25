@@ -56,7 +56,7 @@ const Index = () => {
           </div>
         </div>
 
-        <div className="flex justify-center gap-4 mt-12">
+        <div className="flex justify-center mt-12">
           <a 
             href="/auth"
             className="bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-3 rounded-lg font-semibold transition-colors inline-flex items-center gap-2"
@@ -65,12 +65,6 @@ const Index = () => {
             <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
-          </a>
-          <a 
-            href="/dashboard"
-            className="border border-border hover:bg-accent hover:text-accent-foreground px-8 py-3 rounded-lg font-semibold transition-colors"
-          >
-            View Demo
           </a>
         </div>
 
