@@ -22,7 +22,7 @@ const studentSchema = z.object({
   phone: z.string().optional(),
   college_id: z.string().min(1, 'College is required'),
   course: z.string().min(1, 'Course is required'),
-  year: z.number().min(1).max(10),
+  year: z.number().min(1).max(4),
   section: z.string().optional(),
   status: z.enum(['active', 'inactive', 'graduated', 'transferred']).default('active'),
 });
@@ -254,7 +254,7 @@ export default function AddStudent() {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          {[1, 2, 3, 4, 5, 6].map((year) => (
+                          {[1, 2, 3, 4].map((year) => (
                             <SelectItem key={year} value={year.toString()}>
                               Year {year}
                             </SelectItem>
