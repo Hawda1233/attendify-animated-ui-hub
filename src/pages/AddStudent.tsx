@@ -113,22 +113,22 @@ export default function AddStudent() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Header */}
-      <div className="flex items-center gap-4">
-        <Button variant="ghost" onClick={() => navigate('/students')}>
+      <div className="flex items-center gap-3 sm:gap-4">
+        <Button variant="ghost" onClick={() => navigate('/students')} size="sm">
           <ArrowLeft className="h-4 w-4" />
         </Button>
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Add Student</h1>
-          <p className="text-muted-foreground">
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Add Student</h1>
+          <p className="text-muted-foreground text-sm sm:text-base">
             Register a new student in the system
           </p>
         </div>
       </div>
 
       {/* Form */}
-      <Card className="max-w-2xl">
+      <Card className="max-w-none lg:max-w-3xl mx-auto">
         <CardHeader>
           <CardTitle>Student Information</CardTitle>
           <CardDescription>
@@ -137,7 +137,7 @@ export default function AddStudent() {
         </CardHeader>
         <CardContent>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 sm:space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <FormField
                   control={form.control}
@@ -305,12 +305,12 @@ export default function AddStudent() {
                 )}
               />
 
-              <div className="flex gap-4">
-                <Button type="submit" disabled={loading}>
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-4">
+                <Button type="submit" disabled={loading} className="w-full sm:w-auto">
                   <Save className="mr-2 h-4 w-4" />
                   {loading ? 'Adding...' : 'Add Student'}
                 </Button>
-                <Button type="button" variant="outline" onClick={() => navigate('/students')}>
+                <Button type="button" variant="outline" onClick={() => navigate('/students')} className="w-full sm:w-auto">
                   Cancel
                 </Button>
               </div>

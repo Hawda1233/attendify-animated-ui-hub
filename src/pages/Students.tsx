@@ -107,17 +107,17 @@ export default function Students() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Students</h1>
-          <p className="text-muted-foreground">
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Students</h1>
+          <p className="text-muted-foreground text-sm sm:text-base">
             Manage student records and information
           </p>
         </div>
-        <Link to="/students/add">
-          <Button>
+        <Link to="/students/add" className="w-full sm:w-auto">
+          <Button className="w-full sm:w-auto">
             <UserPlus className="mr-2 h-4 w-4" />
             Add Student
           </Button>
@@ -155,67 +155,131 @@ export default function Students() {
         </CardHeader>
         <CardContent>
           {filteredStudents.length > 0 ? (
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Student ID</TableHead>
-                  <TableHead>Name</TableHead>
-                  <TableHead>Course</TableHead>
-                  <TableHead>Year</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>College</TableHead>
-                  <TableHead>Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
+            <>
+              {/* Desktop Table */}
+              <div className="hidden md:block">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Student ID</TableHead>
+                      <TableHead>Name</TableHead>
+                      <TableHead>Course</TableHead>
+                      <TableHead>Year</TableHead>
+                      <TableHead>Status</TableHead>
+                      <TableHead>College</TableHead>
+                      <TableHead>Actions</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {filteredStudents.map((student) => (
+                      <TableRow key={student.id}>
+                        <TableCell className="font-medium">
+                          {student.student_id}
+                        </TableCell>
+                        <TableCell>
+                          <div>
+                            <p className="font-medium">{student.full_name}</p>
+                            {student.email && (
+                              <p className="text-sm text-muted-foreground">{student.email}</p>
+                            )}
+                          </div>
+                        </TableCell>
+                        <TableCell>{student.course}</TableCell>
+                        <TableCell>Year {student.year}</TableCell>
+                        <TableCell>
+                          <Badge className={getStatusColor(student.status)}>
+                            {student.status}
+                          </Badge>
+                        </TableCell>
+                        <TableCell>{student.colleges?.name}</TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-2">
+                            <Button variant="ghost" size="sm">
+                              <Eye className="h-4 w-4" />
+                            </Button>
+                            <Button variant="ghost" size="sm">
+                              <Edit className="h-4 w-4" />
+                            </Button>
+                            <Button 
+                              variant="ghost" 
+                              size="sm"
+                              onClick={() => deleteStudent(student.id)}
+                              className="text-destructive hover:text-destructive"
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+
+              {/* Mobile Cards */}
+              <div className="md:hidden space-y-4">
                 {filteredStudents.map((student) => (
-                  <TableRow key={student.id}>
-                    <TableCell className="font-medium">
-                      {student.student_id}
-                    </TableCell>
-                    <TableCell>
-                      <div>
-                        <p className="font-medium">{student.full_name}</p>
+                  <Card key={student.id} className="hover-scale transition-all duration-300">
+                    <CardContent className="p-4">
+                      <div className="flex items-start justify-between mb-3">
+                        <div>
+                          <p className="font-semibold text-base">{student.full_name}</p>
+                          <p className="text-sm text-muted-foreground">{student.student_id}</p>
+                        </div>
+                        <Badge className={getStatusColor(student.status)}>
+                          {student.status}
+                        </Badge>
+                      </div>
+                      
+                      <div className="space-y-2 text-sm">
+                        <div className="flex justify-between">
+                          <span className="text-muted-foreground">Course:</span>
+                          <span>{student.course}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-muted-foreground">Year:</span>
+                          <span>Year {student.year}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-muted-foreground">College:</span>
+                          <span className="text-right">{student.colleges?.name}</span>
+                        </div>
                         {student.email && (
-                          <p className="text-sm text-muted-foreground">{student.email}</p>
+                          <div className="flex justify-between">
+                            <span className="text-muted-foreground">Email:</span>
+                            <span className="text-right text-xs">{student.email}</span>
+                          </div>
                         )}
                       </div>
-                    </TableCell>
-                    <TableCell>{student.course}</TableCell>
-                    <TableCell>Year {student.year}</TableCell>
-                    <TableCell>
-                      <Badge className={getStatusColor(student.status)}>
-                        {student.status}
-                      </Badge>
-                    </TableCell>
-                    <TableCell>{student.colleges?.name}</TableCell>
-                    <TableCell>
-                      <div className="flex items-center gap-2">
-                        <Button variant="ghost" size="sm">
-                          <Eye className="h-4 w-4" />
+                      
+                      <div className="flex items-center gap-2 mt-4 pt-3 border-t">
+                        <Button variant="outline" size="sm" className="flex-1">
+                          <Eye className="h-4 w-4 mr-1" />
+                          View
                         </Button>
-                        <Button variant="ghost" size="sm">
-                          <Edit className="h-4 w-4" />
+                        <Button variant="outline" size="sm" className="flex-1">
+                          <Edit className="h-4 w-4 mr-1" />
+                          Edit
                         </Button>
                         <Button 
-                          variant="ghost" 
+                          variant="outline" 
                           size="sm"
                           onClick={() => deleteStudent(student.id)}
-                          className="text-destructive hover:text-destructive"
+                          className="text-destructive hover:text-destructive border-destructive/20"
                         >
                           <Trash2 className="h-4 w-4" />
                         </Button>
                       </div>
-                    </TableCell>
-                  </TableRow>
+                    </CardContent>
+                  </Card>
                 ))}
-              </TableBody>
-            </Table>
+              </div>
+            </>
           ) : (
             <div className="text-center py-12">
               <UserPlus className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
               <h3 className="text-lg font-medium mb-2">No students found</h3>
-              <p className="text-muted-foreground mb-4">
+              <p className="text-muted-foreground mb-4 text-sm sm:text-base">
                 {searchQuery ? 'Try adjusting your search criteria' : 'Get started by adding your first student'}
               </p>
               <Link to="/students/add">

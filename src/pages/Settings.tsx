@@ -86,16 +86,16 @@ export default function Settings() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">Settings</h1>
-        <p className="text-muted-foreground">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Settings</h1>
+        <p className="text-muted-foreground text-sm sm:text-base">
           Manage your account settings and preferences
         </p>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2">
+      <div className="grid gap-4 sm:gap-6 grid-cols-1 xl:grid-cols-2">
         {/* Profile Settings */}
         <Card>
           <CardHeader>
@@ -109,14 +109,14 @@ export default function Settings() {
           </CardHeader>
           <CardContent className="space-y-4">
             {/* Avatar */}
-            <div className="flex items-center gap-4">
+            <div className="flex flex-col sm:flex-row items-center gap-4">
               <Avatar className="h-20 w-20">
                 <AvatarImage src={profileData.avatar_url} />
                 <AvatarFallback className="text-lg">
                   {profileData.full_name.split(' ').map(n => n[0]).join('').toUpperCase() || 'U'}
                 </AvatarFallback>
               </Avatar>
-              <div>
+              <div className="text-center sm:text-left">
                 <Button variant="outline" size="sm">
                   <Camera className="mr-2 h-4 w-4" />
                   Change Avatar
@@ -176,7 +176,7 @@ export default function Settings() {
         </Card>
 
         {/* Account Settings */}
-        <div className="space-y-6">
+        <div className="space-y-4 sm:space-y-6">
           {/* Security */}
           <Card>
             <CardHeader>
@@ -235,7 +235,7 @@ export default function Settings() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="grid grid-cols-2 gap-4 text-sm">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <Label className="text-xs text-muted-foreground">User ID</Label>
                   <p className="font-mono text-xs break-all">{user?.id}</p>

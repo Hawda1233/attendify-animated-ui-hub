@@ -223,23 +223,23 @@ export default function Attendance() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Attendance</h1>
-          <p className="text-muted-foreground">
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Attendance</h1>
+          <p className="text-muted-foreground text-sm sm:text-base">
             Mark student attendance for today
           </p>
         </div>
-        <Button onClick={saveAttendance} disabled={saving}>
+        <Button onClick={saveAttendance} disabled={saving} className="w-full sm:w-auto">
           <Save className="mr-2 h-4 w-4" />
           {saving ? 'Saving...' : 'Save Attendance'}
         </Button>
       </div>
 
       {/* Date Selection and Stats */}
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid gap-4 grid-cols-1 lg:grid-cols-2">
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
@@ -389,67 +389,131 @@ export default function Attendance() {
         </CardHeader>
         <CardContent>
           {filteredStudents.length > 0 ? (
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Student ID</TableHead>
-                  <TableHead>Name</TableHead>
-                  <TableHead>Course</TableHead>
-                  <TableHead>Year</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
+            <>
+              {/* Desktop Table */}
+              <div className="hidden lg:block">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Student ID</TableHead>
+                      <TableHead>Name</TableHead>
+                      <TableHead>Course & Section</TableHead>
+                      <TableHead>Year</TableHead>
+                      <TableHead>Status</TableHead>
+                      <TableHead>Actions</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {filteredStudents.map((student) => (
+                      <TableRow key={student.id}>
+                        <TableCell className="font-medium">
+                          {student.student_id}
+                        </TableCell>
+                        <TableCell>
+                          <div>
+                            <p className="font-medium">{student.full_name}</p>
+                            <p className="text-sm text-muted-foreground">{student.colleges?.name}</p>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <div>
+                            <p>{student.course}</p>
+                            {student.section && (
+                              <p className="text-sm text-muted-foreground">Section {student.section}</p>
+                            )}
+                          </div>
+                        </TableCell>
+                        <TableCell>Year {student.year}</TableCell>
+                        <TableCell>
+                          {student.attendance ? (
+                            <Badge className={getStatusColor(student.attendance.status)}>
+                              {student.attendance.status}
+                            </Badge>
+                          ) : (
+                            <Badge variant="outline">Not marked</Badge>
+                          )}
+                        </TableCell>
+                        <TableCell>
+                          <Select
+                            value={student.attendance?.status || ''}
+                            onValueChange={(value) => updateAttendanceStatus(student.id, value as any)}
+                          >
+                            <SelectTrigger className="w-32">
+                              <SelectValue placeholder="Mark" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="present">Present</SelectItem>
+                              <SelectItem value="absent">Absent</SelectItem>
+                              <SelectItem value="late">Late</SelectItem>
+                              <SelectItem value="excused">Excused</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+
+              {/* Mobile/Tablet Cards */}
+              <div className="lg:hidden space-y-4">
                 {filteredStudents.map((student) => (
-                  <TableRow key={student.id}>
-                    <TableCell className="font-medium">
-                      {student.student_id}
-                    </TableCell>
-                    <TableCell>
-                      <div>
-                        <p className="font-medium">{student.full_name}</p>
-                        <p className="text-sm text-muted-foreground">{student.colleges?.name}</p>
+                  <Card key={student.id} className="hover-scale transition-all duration-300">
+                    <CardContent className="p-4">
+                      <div className="flex items-start justify-between mb-3">
+                        <div>
+                          <p className="font-semibold text-base">{student.full_name}</p>
+                          <p className="text-sm text-muted-foreground">{student.student_id}</p>
+                          <p className="text-xs text-muted-foreground">{student.colleges?.name}</p>
+                        </div>
+                        {student.attendance ? (
+                          <Badge className={getStatusColor(student.attendance.status)}>
+                            {student.attendance.status}
+                          </Badge>
+                        ) : (
+                          <Badge variant="outline">Not marked</Badge>
+                        )}
                       </div>
-                    </TableCell>
-                     <TableCell>
-                       <div>
-                         <p>{student.course}</p>
-                         {student.section && (
-                           <p className="text-sm text-muted-foreground">Section {student.section}</p>
-                         )}
-                       </div>
-                     </TableCell>
-                     <TableCell>Year {student.year}</TableCell>
-                    <TableCell>
-                      {student.attendance ? (
-                        <Badge className={getStatusColor(student.attendance.status)}>
-                          {student.attendance.status}
-                        </Badge>
-                      ) : (
-                        <Badge variant="outline">Not marked</Badge>
-                      )}
-                    </TableCell>
-                    <TableCell>
-                      <Select
-                        value={student.attendance?.status || ''}
-                        onValueChange={(value) => updateAttendanceStatus(student.id, value as any)}
-                      >
-                        <SelectTrigger className="w-32">
-                          <SelectValue placeholder="Mark" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="present">Present</SelectItem>
-                          <SelectItem value="absent">Absent</SelectItem>
-                          <SelectItem value="late">Late</SelectItem>
-                          <SelectItem value="excused">Excused</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </TableCell>
-                  </TableRow>
+                      
+                      <div className="space-y-2 text-sm mb-4">
+                        <div className="flex justify-between">
+                          <span className="text-muted-foreground">Course:</span>
+                          <span>{student.course}</span>
+                        </div>
+                        {student.section && (
+                          <div className="flex justify-between">
+                            <span className="text-muted-foreground">Section:</span>
+                            <span>{student.section}</span>
+                          </div>
+                        )}
+                        <div className="flex justify-between">
+                          <span className="text-muted-foreground">Year:</span>
+                          <span>Year {student.year}</span>
+                        </div>
+                      </div>
+                      
+                      <div className="border-t pt-3">
+                        <label className="text-sm font-medium mb-2 block">Mark Attendance:</label>
+                        <Select
+                          value={student.attendance?.status || ''}
+                          onValueChange={(value) => updateAttendanceStatus(student.id, value as any)}
+                        >
+                          <SelectTrigger className="w-full">
+                            <SelectValue placeholder="Select attendance status" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="present">Present</SelectItem>
+                            <SelectItem value="absent">Absent</SelectItem>
+                            <SelectItem value="late">Late</SelectItem>
+                            <SelectItem value="excused">Excused</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </CardContent>
+                  </Card>
                 ))}
-              </TableBody>
-            </Table>
+              </div>
+            </>
           ) : (
             <div className="text-center py-12">
               <Users className="h-12 w-12 text-muted-foreground mx-auto mb-4" />

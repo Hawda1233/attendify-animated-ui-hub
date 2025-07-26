@@ -113,63 +113,63 @@ export default function Dashboard() {
   ];
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="space-y-4 sm:space-y-6 animate-fade-in">
       {/* Welcome Header */}
       <div className="space-y-2">
-        <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
-        <p className="text-muted-foreground">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Dashboard</h1>
+        <p className="text-muted-foreground text-sm sm:text-base">
           Welcome back! Here's what's happening with attendance today.
         </p>
       </div>
 
       {/* Stats Cards */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Card>
+      <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+        <Card className="hover-scale transition-all duration-300">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Students</CardTitle>
             <Users className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{stats.totalStudents}</div>
+            <div className="text-xl sm:text-2xl font-bold">{stats.totalStudents}</div>
             <p className="text-xs text-muted-foreground">
               Active students enrolled
             </p>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="hover-scale transition-all duration-300">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Present Today</CardTitle>
             <TrendingUp className="h-4 w-4 text-green-600" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-green-600">{stats.totalPresent}</div>
+            <div className="text-xl sm:text-2xl font-bold text-green-600">{stats.totalPresent}</div>
             <p className="text-xs text-muted-foreground">
               Students marked present
             </p>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="hover-scale transition-all duration-300">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Absent Today</CardTitle>
             <Clock className="h-4 w-4 text-red-600" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-red-600">{stats.totalAbsent}</div>
+            <div className="text-xl sm:text-2xl font-bold text-red-600">{stats.totalAbsent}</div>
             <p className="text-xs text-muted-foreground">
               Students marked absent
             </p>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="hover-scale transition-all duration-300">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Attendance Rate</CardTitle>
             <BarChart3 className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{stats.attendanceRate.toFixed(1)}%</div>
+            <div className="text-xl sm:text-2xl font-bold">{stats.attendanceRate.toFixed(1)}%</div>
             <p className="text-xs text-muted-foreground">
               Today's attendance rate
             </p>
@@ -178,9 +178,9 @@ export default function Dashboard() {
       </div>
 
       {/* Quick Actions and Recent Students */}
-      <div className="grid gap-6 md:grid-cols-2">
+      <div className="grid gap-4 sm:gap-6 grid-cols-1 lg:grid-cols-2">
         {/* Quick Actions */}
-        <Card>
+        <Card className="hover-scale transition-all duration-300">
           <CardHeader>
             <CardTitle>Quick Actions</CardTitle>
             <CardDescription>
@@ -190,12 +190,12 @@ export default function Dashboard() {
           <CardContent className="space-y-4">
             {quickActions.map((action) => (
               <Link key={action.title} to={action.href}>
-                <Button variant="outline" className="w-full justify-start h-auto p-4">
+                <Button variant="outline" className="w-full justify-start h-auto p-3 sm:p-4 hover-scale transition-all duration-300">
                   <div className={`p-2 rounded-md ${action.color} mr-4`}>
                     <action.icon className="h-4 w-4 text-white" />
                   </div>
                   <div className="text-left">
-                    <div className="font-medium">{action.title}</div>
+                    <div className="font-medium text-sm sm:text-base">{action.title}</div>
                     <div className="text-sm text-muted-foreground">
                       {action.description}
                     </div>
@@ -207,7 +207,7 @@ export default function Dashboard() {
         </Card>
 
         {/* Recent Students */}
-        <Card>
+        <Card className="hover-scale transition-all duration-300">
           <CardHeader>
             <CardTitle>Recent Students</CardTitle>
             <CardDescription>
@@ -216,12 +216,12 @@ export default function Dashboard() {
           </CardHeader>
           <CardContent>
             {recentStudents.length > 0 ? (
-              <div className="space-y-4">
+              <div className="space-y-3 sm:space-y-4">
                 {recentStudents.map((student) => (
-                  <div key={student.id} className="flex items-center justify-between p-3 rounded-lg border">
+                  <div key={student.id} className="flex items-center justify-between p-3 rounded-lg border hover:bg-accent/50 transition-colors">
                     <div>
-                      <p className="font-medium">{student.full_name}</p>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="font-medium text-sm sm:text-base">{student.full_name}</p>
+                      <p className="text-xs sm:text-sm text-muted-foreground">
                         {student.course} - Year {student.year}
                       </p>
                       <p className="text-xs text-muted-foreground">
@@ -229,7 +229,7 @@ export default function Dashboard() {
                       </p>
                     </div>
                     <div className="text-right">
-                      <p className="text-sm font-medium">{student.student_id}</p>
+                      <p className="text-xs sm:text-sm font-medium">{student.student_id}</p>
                       <p className="text-xs text-muted-foreground">
                         {new Date(student.created_at).toLocaleDateString()}
                       </p>

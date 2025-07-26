@@ -43,34 +43,36 @@ export function Layout({ children }: LayoutProps) {
         
         <div className="flex-1 flex flex-col">
           {/* Header */}
-          <header className="h-16 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-40">
-            <div className="flex h-16 items-center gap-4 px-4">
+          <header className="h-14 sm:h-16 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-40">
+            <div className="flex h-full items-center gap-2 sm:gap-4 px-3 sm:px-4">
               <SidebarTrigger />
               
-              <Breadcrumb>
-                <BreadcrumbList>
-                  {breadcrumbs.map((breadcrumb, index) => (
-                    <div key={breadcrumb.href} className="flex items-center">
-                      {index > 0 && <BreadcrumbSeparator />}
-                      <BreadcrumbItem>
-                        {index === breadcrumbs.length - 1 ? (
-                          <BreadcrumbPage>{breadcrumb.title}</BreadcrumbPage>
-                        ) : (
-                          <BreadcrumbLink href={breadcrumb.href}>
-                            {breadcrumb.title}
-                          </BreadcrumbLink>
-                        )}
-                      </BreadcrumbItem>
-                    </div>
-                  ))}
-                </BreadcrumbList>
-              </Breadcrumb>
+              <div className="flex-1 min-w-0">
+                <Breadcrumb>
+                  <BreadcrumbList>
+                    {breadcrumbs.map((breadcrumb, index) => (
+                      <div key={breadcrumb.href} className="flex items-center">
+                        {index > 0 && <BreadcrumbSeparator />}
+                        <BreadcrumbItem>
+                          {index === breadcrumbs.length - 1 ? (
+                            <BreadcrumbPage className="text-sm sm:text-base">{breadcrumb.title}</BreadcrumbPage>
+                          ) : (
+                            <BreadcrumbLink href={breadcrumb.href} className="text-sm sm:text-base">
+                              {breadcrumb.title}
+                            </BreadcrumbLink>
+                          )}
+                        </BreadcrumbItem>
+                      </div>
+                    ))}
+                  </BreadcrumbList>
+                </Breadcrumb>
+              </div>
             </div>
           </header>
 
           {/* Main Content */}
           <main className="flex-1 overflow-auto">
-            <div className="container mx-auto p-6">
+            <div className="container mx-auto p-3 sm:p-4 md:p-6 max-w-full">
               {children}
             </div>
           </main>
