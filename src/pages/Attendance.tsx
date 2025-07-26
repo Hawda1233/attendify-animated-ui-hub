@@ -22,6 +22,9 @@ export default function Attendance() {
   const [saving, setSaving] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
+  const [selectedCourse, setSelectedCourse] = useState<string>('');
+  const [selectedSection, setSelectedSection] = useState<string>('');
+  const [selectedYear, setSelectedYear] = useState<string>('');
   const { user } = useAuth();
   const { toast } = useToast();
 
@@ -31,7 +34,7 @@ export default function Attendance() {
 
   useEffect(() => {
     filterStudents();
-  }, [students, searchQuery]);
+  }, [students, searchQuery, selectedCourse, selectedSection, selectedYear]);
 
   const fetchStudentsAndAttendance = async () => {
     try {
@@ -74,17 +77,44 @@ export default function Attendance() {
   };
 
   const filterStudents = () => {
-    if (!searchQuery) {
-      setFilteredStudents(students);
-    } else {
-      const filtered = students.filter(student =>
+    let filtered = students;
+
+    // Filter by search query
+    if (searchQuery) {
+      filtered = filtered.filter(student =>
         student.full_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         student.student_id.toLowerCase().includes(searchQuery.toLowerCase()) ||
         student.course.toLowerCase().includes(searchQuery.toLowerCase())
       );
-      setFilteredStudents(filtered);
     }
+
+    // Filter by course
+    if (selectedCourse) {
+      filtered = filtered.filter(student => student.course === selectedCourse);
+    }
+
+    // Filter by section
+    if (selectedSection) {
+      filtered = filtered.filter(student => student.section === selectedSection);
+    }
+
+    // Filter by year
+    if (selectedYear) {
+      filtered = filtered.filter(student => student.year.toString() === selectedYear);
+    }
+
+    setFilteredStudents(filtered);
   };
+
+  // Get unique values for filter dropdowns
+  const getUniqueValues = () => {
+    const courses = [...new Set(students.map(s => s.course))].sort();
+    const sections = [...new Set(students.map(s => s.section).filter(Boolean))].sort();
+    const years = [...new Set(students.map(s => s.year.toString()))].sort();
+    return { courses, sections, years };
+  };
+
+  const { courses, sections, years } = getUniqueValues();
 
   const updateAttendanceStatus = (studentId: string, status: 'present' | 'absent' | 'late' | 'excused') => {
     setStudents(prev => prev.map(student => {
@@ -260,17 +290,88 @@ export default function Attendance() {
         </Card>
       </div>
 
-      {/* Search */}
+      {/* Search and Filters */}
       <Card>
-        <CardContent className="pt-6">
+        <CardHeader>
+          <CardTitle>Search & Filters</CardTitle>
+          <CardDescription>
+            Filter students by course, section, year, or search by name/ID
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {/* Search Bar */}
           <div className="relative">
             <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
             <Input
-              placeholder="Search students..."
+              placeholder="Search students by name or ID..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-10"
             />
+          </div>
+          
+          {/* Filter Controls */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Course</label>
+              <Select value={selectedCourse} onValueChange={setSelectedCourse}>
+                <SelectTrigger>
+                  <SelectValue placeholder="All courses" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="">All courses</SelectItem>
+                  {courses.map(course => (
+                    <SelectItem key={course} value={course}>{course}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Section</label>
+              <Select value={selectedSection} onValueChange={setSelectedSection}>
+                <SelectTrigger>
+                  <SelectValue placeholder="All sections" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="">All sections</SelectItem>
+                  {sections.map(section => (
+                    <SelectItem key={section} value={section}>{section}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Year</label>
+              <Select value={selectedYear} onValueChange={setSelectedYear}>
+                <SelectTrigger>
+                  <SelectValue placeholder="All years" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="">All years</SelectItem>
+                  {years.map(year => (
+                    <SelectItem key={year} value={year}>Year {year}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Clear Filters</label>
+              <Button 
+                variant="outline" 
+                onClick={() => {
+                  setSearchQuery('');
+                  setSelectedCourse('');
+                  setSelectedSection('');
+                  setSelectedYear('');
+                }}
+                className="w-full"
+              >
+                Clear All
+              </Button>
+            </div>
           </div>
         </CardContent>
       </Card>
@@ -311,8 +412,15 @@ export default function Attendance() {
                         <p className="text-sm text-muted-foreground">{student.colleges?.name}</p>
                       </div>
                     </TableCell>
-                    <TableCell>{student.course}</TableCell>
-                    <TableCell>Year {student.year}</TableCell>
+                     <TableCell>
+                       <div>
+                         <p>{student.course}</p>
+                         {student.section && (
+                           <p className="text-sm text-muted-foreground">Section {student.section}</p>
+                         )}
+                       </div>
+                     </TableCell>
+                     <TableCell>Year {student.year}</TableCell>
                     <TableCell>
                       {student.attendance ? (
                         <Badge className={getStatusColor(student.attendance.status)}>
@@ -345,10 +453,12 @@ export default function Attendance() {
           ) : (
             <div className="text-center py-12">
               <Users className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-              <h3 className="text-lg font-medium mb-2">No students found</h3>
-              <p className="text-muted-foreground">
-                {searchQuery ? 'Try adjusting your search criteria' : 'No active students to mark attendance for'}
-              </p>
+               <h3 className="text-lg font-medium mb-2">No students found</h3>
+               <p className="text-muted-foreground">
+                 {(searchQuery || selectedCourse || selectedSection || selectedYear) 
+                   ? 'Try adjusting your search or filter criteria' 
+                   : 'No active students to mark attendance for'}
+               </p>
             </div>
           )}
         </CardContent>
