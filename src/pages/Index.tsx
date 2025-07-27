@@ -51,9 +51,9 @@ const Index = () => {
                 <h1 className="text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold gradient-text leading-tight">
                   AttendanceHub
                 </h1>
-                <div className="inline-flex items-center px-4 py-2 sm:px-6 sm:py-3 rounded-full bg-green-500/10 border border-green-500/20 text-green-600 dark:text-green-400 text-sm sm:text-base font-medium animate-fade-in backdrop-blur-sm">
+                <div className="inline-flex items-center px-4 py-2 sm:px-6 sm:py-3 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-600 dark:text-blue-400 text-sm sm:text-base font-medium animate-fade-in backdrop-blur-sm">
                   <Star className="h-4 w-4 mr-2 fill-current" />
-                  No Sign-up Required • Instant Access
+                  Secure Login • Quick Setup
                 </div>
               </div>
             </div>
@@ -75,7 +75,7 @@ const Index = () => {
                   asChild
                 >
                   <a href="/auth" className="flex items-center justify-center">
-                    Start Using Now
+                    Get Started Now
                     <ArrowRight className="ml-3 h-5 w-5" />
                   </a>
                 </Button>
@@ -103,7 +103,7 @@ const Index = () => {
 
               {/* Additional Trust Message */}
               <p className="text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto">
-                Join 10,000+ institutions worldwide • No credit card required • Setup in under 2 minutes
+                Join 10,000+ institutions worldwide • Quick registration • Setup in under 2 minutes
               </p>
             </div>
           </div>
@@ -337,7 +337,7 @@ const Index = () => {
                   asChild
                 >
                   <a href="/auth" className="flex items-center justify-center">
-                    Start Using Now
+                    Get Started Now
                     <ArrowRight className="ml-3 h-5 w-5 sm:h-6 sm:w-6" />
                   </a>
                 </Button>
@@ -346,8 +346,8 @@ const Index = () => {
               {/* Trust Messaging */}
               <div className="space-y-4">
                 <p className="text-sm sm:text-base text-muted-foreground">
-                  <span className="font-semibold text-green-600">✓ No registration required</span> • 
-                  <span className="font-semibold text-blue-600"> Instant access</span> • 
+                  <span className="font-semibold text-green-600">✓ Quick registration</span> • 
+                  <span className="font-semibold text-blue-600"> Secure access</span> • 
                   <span className="font-semibold text-purple-600"> Always available</span> • 
                   <span className="font-semibold text-orange-600"> No hidden costs</span>
                 </p>
@@ -375,7 +375,7 @@ const Index = () => {
                 🚀 Get Started in Seconds
               </h3>
               <p className="text-sm sm:text-base text-muted-foreground">
-                No complicated setup, no learning curve. Click "Start Using Now" and begin tracking attendance immediately. 
+                Create your account in seconds and begin tracking attendance immediately. 
                 Our intuitive interface makes attendance management effortless from day one.
               </p>
             </div>
