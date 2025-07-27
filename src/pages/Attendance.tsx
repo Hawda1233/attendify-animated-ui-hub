@@ -22,9 +22,9 @@ export default function Attendance() {
   const [saving, setSaving] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
-  const [selectedCourse, setSelectedCourse] = useState<string>('');
-  const [selectedSection, setSelectedSection] = useState<string>('');
-  const [selectedYear, setSelectedYear] = useState<string>('');
+  const [selectedCourse, setSelectedCourse] = useState<string>('all');
+  const [selectedSection, setSelectedSection] = useState<string>('all');
+  const [selectedYear, setSelectedYear] = useState<string>('all');
   const { user } = useAuth();
   const { toast } = useToast();
 
@@ -89,17 +89,17 @@ export default function Attendance() {
     }
 
     // Filter by course
-    if (selectedCourse) {
+    if (selectedCourse && selectedCourse !== 'all') {
       filtered = filtered.filter(student => student.course === selectedCourse);
     }
 
     // Filter by section
-    if (selectedSection) {
+    if (selectedSection && selectedSection !== 'all') {
       filtered = filtered.filter(student => student.section === selectedSection);
     }
 
     // Filter by year
-    if (selectedYear) {
+    if (selectedYear && selectedYear !== 'all') {
       filtered = filtered.filter(student => student.year.toString() === selectedYear);
     }
 
@@ -319,7 +319,7 @@ export default function Attendance() {
                   <SelectValue placeholder="All courses" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All courses</SelectItem>
+                  <SelectItem value="all">All courses</SelectItem>
                   {courses.map(course => (
                     <SelectItem key={course} value={course}>{course}</SelectItem>
                   ))}
@@ -334,7 +334,7 @@ export default function Attendance() {
                   <SelectValue placeholder="All sections" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All sections</SelectItem>
+                  <SelectItem value="all">All sections</SelectItem>
                   {sections.map(section => (
                     <SelectItem key={section} value={section}>{section}</SelectItem>
                   ))}
@@ -349,7 +349,7 @@ export default function Attendance() {
                   <SelectValue placeholder="All years" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All years</SelectItem>
+                  <SelectItem value="all">All years</SelectItem>
                   {years.map(year => (
                     <SelectItem key={year} value={year}>Year {year}</SelectItem>
                   ))}
@@ -363,9 +363,9 @@ export default function Attendance() {
                 variant="outline" 
                 onClick={() => {
                   setSearchQuery('');
-                  setSelectedCourse('');
-                  setSelectedSection('');
-                  setSelectedYear('');
+                  setSelectedCourse('all');
+                  setSelectedSection('all');
+                  setSelectedYear('all');
                 }}
                 className="w-full"
               >
