@@ -103,7 +103,7 @@ const Index = () => {
 
               {/* Additional Trust Message */}
               <p className="text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto">
-                Join 10,000+ institutions worldwide • Quick registration • Setup in under 2 minutes
+                Start your attendance management journey • Quick registration • Setup in under 2 minutes
               </p>
             </div>
           </div>
@@ -132,12 +132,12 @@ const Index = () => {
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6 lg:gap-8">
             {[
-              { number: "50K+", label: "Students Managed", icon: Users, color: "text-blue-500" },
-              { number: "1,000+", label: "Institutions", icon: GraduationCap, color: "text-purple-500" },
+              { number: "Growing", label: "Student Network", icon: Users, color: "text-blue-500" },
+              { number: "New", label: "Platform", icon: GraduationCap, color: "text-purple-500" },
               { number: "99.9%", label: "Uptime", icon: TrendingUp, color: "text-green-500" },
               { number: "24/7", label: "Support", icon: Globe, color: "text-orange-500" },
               { number: "<2min", label: "Setup Time", icon: Clock, color: "text-indigo-500" },
-              { number: "100%", label: "Satisfaction", icon: CheckCircle, color: "text-emerald-500" }
+              { number: "Modern", label: "Design", icon: CheckCircle, color: "text-emerald-500" }
             ].map((stat, index) => (
               <Card 
                 key={index} 
@@ -323,7 +323,7 @@ const Index = () => {
               </h2>
               
               <p className="text-lg sm:text-xl lg:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-                Join thousands of educational institutions already using AttendanceHub to streamline their operations.
+                Join the future of educational attendance management with AttendanceHub.
                 <span className="block mt-2 text-primary font-medium">Start managing attendance like a pro today.</span>
               </p>
             </div>
@@ -355,7 +355,7 @@ const Index = () => {
                 <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-8 text-xs sm:text-sm text-muted-foreground">
                   <div className="flex items-center gap-2">
                     <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                    <span>Used by 1,000+ institutions</span>
+                    <span>Ready for modern education</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
