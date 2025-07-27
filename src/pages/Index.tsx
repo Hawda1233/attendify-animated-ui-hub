@@ -74,7 +74,7 @@ const Index = () => {
                   className="w-full sm:w-auto text-lg px-8 py-6 h-auto gradient-primary hover:scale-105 transition-all duration-300 animate-glow shadow-2xl"
                   asChild
                 >
-                  <a href="/dashboard" className="flex items-center justify-center">
+                  <a href="/auth" className="flex items-center justify-center">
                     Start Using Now
                     <ArrowRight className="ml-3 h-5 w-5" />
                   </a>
@@ -336,7 +336,7 @@ const Index = () => {
                   className="w-full sm:w-auto text-lg sm:text-xl px-8 sm:px-12 py-6 sm:py-8 h-auto gradient-primary hover:scale-105 transition-all duration-300 shadow-2xl animate-glow"
                   asChild
                 >
-                  <a href="/dashboard" className="flex items-center justify-center">
+                  <a href="/auth" className="flex items-center justify-center">
                     Start Using Now
                     <ArrowRight className="ml-3 h-5 w-5 sm:h-6 sm:w-6" />
                   </a>
@@ -411,8 +411,8 @@ const Index = () => {
 
             {/* Links */}
             <div className="flex flex-wrap justify-center gap-6 sm:gap-8 text-sm sm:text-base">
-              <a href="/dashboard" className="text-muted-foreground hover:text-primary transition-colors duration-200 hover:underline">
-                Dashboard
+              <a href="/auth" className="text-muted-foreground hover:text-primary transition-colors duration-200 hover:underline">
+                Sign In
               </a>
               <a href="/students" className="text-muted-foreground hover:text-primary transition-colors duration-200 hover:underline">
                 Students
