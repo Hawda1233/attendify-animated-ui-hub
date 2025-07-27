@@ -428,7 +428,7 @@ const Index = () => {
             {/* Copyright */}
             <div className="pt-6 border-t border-border/50">
               <p className="text-xs sm:text-sm text-muted-foreground">
-                © 2024 AttendanceHub. Empowering education through technology • Always improving
+                © 2025 AttendanceHub. Empowering education through technology • Always improving
               </p>
             </div>
           </div>
