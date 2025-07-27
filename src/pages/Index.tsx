@@ -53,7 +53,7 @@ const Index = () => {
                 </h1>
                 <div className="inline-flex items-center px-4 py-2 sm:px-6 sm:py-3 rounded-full bg-green-500/10 border border-green-500/20 text-green-600 dark:text-green-400 text-sm sm:text-base font-medium animate-fade-in backdrop-blur-sm">
                   <Star className="h-4 w-4 mr-2 fill-current" />
-                  100% Free Forever • No Sign-up Required
+                  No Sign-up Required • Instant Access
                 </div>
               </div>
             </div>
@@ -75,17 +75,9 @@ const Index = () => {
                   asChild
                 >
                   <a href="/dashboard" className="flex items-center justify-center">
-                    Start Using Now - It's Free!
+                    Start Using Now
                     <ArrowRight className="ml-3 h-5 w-5" />
                   </a>
-                </Button>
-                <Button 
-                  size="lg" 
-                  variant="outline" 
-                  className="w-full sm:w-auto text-lg px-8 py-6 h-auto glass-effect hover-lift border-primary/20 hover:border-primary/40"
-                >
-                  <Zap className="mr-3 h-5 w-5" />
-                  Watch Demo
                 </Button>
               </div>
 
@@ -345,17 +337,9 @@ const Index = () => {
                   asChild
                 >
                   <a href="/dashboard" className="flex items-center justify-center">
-                    Start Using Now - 100% Free
+                    Start Using Now
                     <ArrowRight className="ml-3 h-5 w-5 sm:h-6 sm:w-6" />
                   </a>
-                </Button>
-                <Button 
-                  size="lg" 
-                  variant="outline" 
-                  className="w-full sm:w-auto text-lg sm:text-xl px-8 sm:px-12 py-6 sm:py-8 h-auto glass-effect hover-lift border-primary/20 hover:border-primary/40"
-                >
-                  <Star className="mr-3 h-5 w-5 sm:h-6 sm:w-6" />
-                  See Live Demo
                 </Button>
               </div>
 
@@ -364,7 +348,7 @@ const Index = () => {
                 <p className="text-sm sm:text-base text-muted-foreground">
                   <span className="font-semibold text-green-600">✓ No registration required</span> • 
                   <span className="font-semibold text-blue-600"> Instant access</span> • 
-                  <span className="font-semibold text-purple-600"> Always free</span> • 
+                  <span className="font-semibold text-purple-600"> Always available</span> • 
                   <span className="font-semibold text-orange-600"> No hidden costs</span>
                 </p>
                 
@@ -444,7 +428,7 @@ const Index = () => {
             {/* Copyright */}
             <div className="pt-6 border-t border-border/50">
               <p className="text-xs sm:text-sm text-muted-foreground">
-                © 2024 AttendanceHub. Empowering education through technology • Always free, always improving
+                © 2024 AttendanceHub. Empowering education through technology • Always improving
               </p>
             </div>
           </div>
