@@ -99,8 +99,8 @@ const Index = () => {
                 className="text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 gradient-primary hover:scale-105 transition-all duration-300 animate-glow"
                 asChild
               >
-                <a href="/auth">
-                  Get Started - It's Free!
+                <a href="/dashboard">
+                  Start Using Now - It's Free!
                   <ArrowRight className="ml-2 h-4 sm:h-5 w-4 sm:w-5" />
                 </a>
               </Button>
@@ -213,8 +213,8 @@ const Index = () => {
                 className="text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 gradient-primary hover:scale-105 transition-all duration-300"
                 asChild
               >
-                <a href="/auth">
-                  Start Using Free
+                <a href="/dashboard">
+                  Start Using Now
                   <Star className="ml-2 h-4 sm:h-5 w-4 sm:w-5" />
                 </a>
               </Button>
@@ -228,7 +228,7 @@ const Index = () => {
             </div>
 
             <p className="text-xs sm:text-sm text-muted-foreground mt-4 sm:mt-6">
-              No registration required for basic features • Always free • No hidden costs
+              No registration required • Instant access • Always free • No hidden costs
             </p>
           </div>
         </div>
