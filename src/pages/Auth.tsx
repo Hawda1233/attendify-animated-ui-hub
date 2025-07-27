@@ -29,13 +29,30 @@ export default function Auth() {
     setIsLoading(true);
     setError('');
 
+    // Validation
+    if (!signInData.email.trim()) {
+      setError('Email is required');
+      setIsLoading(false);
+      return;
+    }
+
+    if (!signInData.password) {
+      setError('Password is required');
+      setIsLoading(false);
+      return;
+    }
+
     const { error } = await signIn(signInData.email, signInData.password);
     
     if (error) {
-      setError(error.message);
+      const errorMessage = error.message === 'Invalid login credentials' 
+        ? 'Invalid email or password. Please check your credentials and try again.'
+        : error.message;
+      
+      setError(errorMessage);
       toast({
         title: 'Sign In Failed',
-        description: error.message,
+        description: errorMessage,
         variant: 'destructive',
       });
     } else {
@@ -43,6 +60,8 @@ export default function Auth() {
         title: 'Welcome back!',
         description: 'You have successfully signed in.',
       });
+      // Clear form
+      setSignInData({ email: '', password: '' });
     }
     
     setIsLoading(false);
@@ -52,6 +71,19 @@ export default function Auth() {
     e.preventDefault();
     setIsLoading(true);
     setError('');
+
+    // Validation
+    if (!signUpData.fullName.trim()) {
+      setError('Full name is required');
+      setIsLoading(false);
+      return;
+    }
+
+    if (!signUpData.email.trim()) {
+      setError('Email is required');
+      setIsLoading(false);
+      return;
+    }
 
     if (signUpData.password !== signUpData.confirmPassword) {
       setError('Passwords do not match');
@@ -68,17 +100,23 @@ export default function Auth() {
     const { error } = await signUp(signUpData.email, signUpData.password, signUpData.fullName);
     
     if (error) {
-      setError(error.message);
+      const errorMessage = error.message === 'User already registered' 
+        ? 'An account with this email already exists. Please sign in instead.'
+        : error.message;
+      
+      setError(errorMessage);
       toast({
         title: 'Sign Up Failed',
-        description: error.message,
+        description: errorMessage,
         variant: 'destructive',
       });
     } else {
       toast({
-        title: 'Account Created!',
-        description: 'Please check your email to verify your account.',
+        title: 'Welcome to AttendanceHub!',
+        description: 'Your account has been created successfully.',
       });
+      // Clear form
+      setSignUpData({ email: '', password: '', fullName: '', confirmPassword: '' });
     }
     
     setIsLoading(false);

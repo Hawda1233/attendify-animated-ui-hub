@@ -22,65 +22,142 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let mounted = true;
+
     // Set up auth state listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
+      (event, session) => {
+        if (!mounted) return;
+        
         setSession(session);
         setUser(session?.user ?? null);
         
         if (session?.user) {
-          // Fetch user profile
+          // Fetch user profile with timeout to prevent blocking
           setTimeout(async () => {
-            const { data: profile } = await supabase
-              .from('profiles')
-              .select('*, colleges(*)')
-              .eq('user_id', session.user.id)
-              .single();
-            setProfile(profile);
+            if (!mounted) return;
+            try {
+              const { data: profile, error } = await supabase
+                .from('profiles')
+                .select('*, colleges(*)')
+                .eq('user_id', session.user.id)
+                .maybeSingle();
+              
+              if (mounted && !error) {
+                setProfile(profile);
+              }
+            } catch (error) {
+              console.error('Error fetching profile:', error);
+            }
           }, 0);
         } else {
           setProfile(null);
         }
-        setLoading(false);
+        
+        if (mounted) {
+          setLoading(false);
+        }
       }
     );
 
     // Check for existing session
     supabase.auth.getSession().then(({ data: { session } }) => {
+      if (!mounted) return;
+      
       setSession(session);
       setUser(session?.user ?? null);
-      setLoading(false);
+      
+      // Fetch profile if user exists
+      if (session?.user) {
+        setTimeout(async () => {
+          if (!mounted) return;
+          try {
+            const { data: profile, error } = await supabase
+              .from('profiles')
+              .select('*, colleges(*)')
+              .eq('user_id', session.user.id)
+              .maybeSingle();
+            
+            if (mounted && !error) {
+              setProfile(profile);
+            }
+          } catch (error) {
+            console.error('Error fetching profile:', error);
+          }
+        }, 0);
+      }
+      
+      if (mounted) {
+        setLoading(false);
+      }
     });
 
-    return () => subscription.unsubscribe();
+    return () => {
+      mounted = false;
+      subscription.unsubscribe();
+    };
   }, []);
 
   const signIn = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-    return { error };
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: email.trim().toLowerCase(),
+        password,
+      });
+      
+      if (error) {
+        console.error('Sign in error:', error);
+        return { error };
+      }
+      
+      return { error: null, data };
+    } catch (error: any) {
+      console.error('Unexpected sign in error:', error);
+      return { error: { message: 'An unexpected error occurred during sign in' } };
+    }
   };
 
   const signUp = async (email: string, password: string, fullName: string) => {
-    const redirectUrl = `${window.location.origin}/`;
-    
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: redirectUrl,
-        data: {
-          full_name: fullName,
+    try {
+      const redirectUrl = `${window.location.origin}/`;
+      
+      const { data, error } = await supabase.auth.signUp({
+        email: email.trim().toLowerCase(),
+        password,
+        options: {
+          emailRedirectTo: redirectUrl,
+          data: {
+            full_name: fullName.trim(),
+          },
         },
-      },
-    });
-    return { error };
+      });
+      
+      if (error) {
+        console.error('Sign up error:', error);
+        return { error };
+      }
+      
+      // Since auto-confirm is enabled, user should be signed in immediately
+      return { error: null, data };
+    } catch (error: any) {
+      console.error('Unexpected sign up error:', error);
+      return { error: { message: 'An unexpected error occurred during sign up' } };
+    }
   };
 
   const signOut = async () => {
-    await supabase.auth.signOut();
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        console.error('Sign out error:', error);
+      }
+      // Clear local state
+      setUser(null);
+      setSession(null);
+      setProfile(null);
+    } catch (error) {
+      console.error('Unexpected sign out error:', error);
+    }
   };
 
   const value = {
