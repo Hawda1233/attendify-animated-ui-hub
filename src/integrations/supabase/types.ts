@@ -190,7 +190,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      can_view_profile: {
+        Args: { profile_college_id: string; profile_user_id: string }
+        Returns: boolean
+      }
+      get_current_user_college_id: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
     }
     Enums: {
       attendance_status: "present" | "absent" | "late" | "excused"
